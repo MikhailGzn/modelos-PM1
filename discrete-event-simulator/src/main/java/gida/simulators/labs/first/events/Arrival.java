@@ -12,6 +12,7 @@ import gida.simulators.labs.first.resources.Server;
 public class Arrival extends Event {
 
     private ServerSelectionPolicy policy;
+    private double hola;
 
     private EndOfServiceBehavior endOfServiceBehavior;
 
