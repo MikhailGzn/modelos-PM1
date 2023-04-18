@@ -6,7 +6,6 @@ import gida.simulators.labs.first.utils.Randomizer;
 public class EndOfServiceBehavior implements Behavior {
 
     private Randomizer randomizer;
-    //private Distribution<Double> distribution;
 
     public EndOfServiceBehavior(Randomizer randomizer) {
         this.randomizer = randomizer;
