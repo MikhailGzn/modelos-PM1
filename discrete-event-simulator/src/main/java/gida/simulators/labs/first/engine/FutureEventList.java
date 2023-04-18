@@ -1,29 +1,29 @@
 package gida.simulators.labs.first.engine;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.PriorityQueue;
 
-import gida.simulators.labs.first.events.Arrival;
-import gida.simulators.labs.first.events.EndOfService;
 import gida.simulators.labs.first.events.Event;
 import gida.simulators.labs.first.utils.Order;
 
 public class FutureEventList {
 
-    private PriorityQueue<Event> fel;
+    private List<Event> fel;
+    private Order order;
 
     public FutureEventList() {
-        this.fel = new PriorityQueue<>(new Order());
+        this.fel = new ArrayList<>();
+        this.order = new Order();
     }
 
     public void insert(Event event) {
-        this.fel.add(event);      
+        this.fel.add(event); 
+        this.fel.sort(this.order);     
     }
 
     public Event getImminent() {
-        return this.fel.poll();
+        return this.fel.remove(0);
     }
 
     @Override
