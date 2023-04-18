@@ -8,19 +8,16 @@ public class OneToOneQueuePolicy implements ServerQueuePolicy {
 
     @Override
     public boolean queuesEmpty(List<Queue> queues) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'queuesEmpty'");
+        return queues.get(0).isEmpty();
     }
 
     @Override
     public void enqueue(List<Queue> queues, Entity entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enqueue'");
+        queues.get(0).enqueue(entity);
     }
 
     @Override
     public Entity dequeue(List<Queue> queues) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dequeue'");
+        return queues.get(0).next();
     }
 }
