@@ -7,8 +7,7 @@ public class UniqueServerSelectionPolicy implements ServerSelectionPolicy {
 
     @Override
     public Server selectServer(List<Server> servers) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectServer'");
+        return servers.get(0);
     }
 
 }
