@@ -14,7 +14,22 @@ public class EndOfService extends Event {
 
     @Override
     public void planificate(FutureEventList fel, List<Server> servers) {
-
+        Entity entity = this.getEntity();
+        Server server = entity.getServer();
+        if(server.queuesEmpty()){
+            server.setCurrentEntity(null);
+            this.getEntity().setServer(null);
+            //COLLECT STATS
+        }else{
+            Entity headQueue = server.dequeue();
+            headQueue.setServer(server);
+            server.setCurrentEntity(headQueue);
+            // PLANIFICATE ENDOFSERVICE
+            double nextTime = this.getBehavior().nextTime();
+            Event e = new EndOfService(this.getClock() + nextTime, headQueue,(EndOfServiceBehavior)this.getBehavior());
+            fel.insert(e);
+            //COLLECT STATS
+        }
     }
 
     @Override
@@ -25,3 +40,4 @@ public class EndOfService extends Event {
         return ret;
     }
 }
+

@@ -1,5 +1,7 @@
 package gida.simulators.labs.first.resources;
 
+import java.util.LinkedList;
+
 import gida.simulators.labs.first.entities.Entity;
 
 public class CustomQueue implements Queue {
@@ -7,34 +9,34 @@ public class CustomQueue implements Queue {
     private int id;
     private java.util.Queue<Entity> queue;
 
+    public CustomQueue(int id){
+        this.id = id;
+        this.queue = new LinkedList<>();
+    }
+
     @Override
     public int getId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+        return this.id;
     }
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+        return this.queue.isEmpty();
     }
 
     @Override
     public void enqueue(Entity entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enqueue'");
+        queue.add(entity);
     }
 
     @Override
     public Entity checkNext() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'checkNext'");
+        return queue.peek();
     }
 
     @Override
     public Entity next() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'next'");
+        return queue.poll();
     }
 
     @Override

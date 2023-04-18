@@ -2,7 +2,7 @@ package gida.simulators.labs.first.events;
 
 import java.util.List;
 
-import gida.simulators.labs.first.behaviors.Behavior;
+import gida.simulators.labs.first.behaviors.ArrivalBehavior;
 import gida.simulators.labs.first.behaviors.EndOfServiceBehavior;
 import gida.simulators.labs.first.engine.FutureEventList;
 import gida.simulators.labs.first.entities.Entity;
@@ -15,7 +15,7 @@ public class Arrival extends Event {
 
     private EndOfServiceBehavior endOfServiceBehavior;
 
-    public Arrival(double clock, Entity entity, Behavior behavior,
+    public Arrival(double clock, Entity entity, ArrivalBehavior behavior,
             EndOfServiceBehavior endOfServiceBehavior, ServerSelectionPolicy policy) {
                 super(clock,entity,behavior,2);
                 this.endOfServiceBehavior = endOfServiceBehavior;
@@ -35,17 +35,17 @@ public class Arrival extends Event {
         }else{
             server.setCurrentEntity(this.getEntity());
             this.getEntity().setServer(server);
-            System.out.print("El servidor esta ocupado????????????");
-            System.out.print(server.isBusy());
             //TIME OF SERVICE AND PLANIFICATION OF NEXT ARRIVAL  
-            double clock = this.endOfServiceBehavior.nextTime();
-            Event e = new Arrival(this.getClock() + clock,null,null,null,null);
+            double nextTime = this.endOfServiceBehavior.nextTime();
+            Event e = new EndOfService(this.getClock() + nextTime,this.getEntity(),this.endOfServiceBehavior);
             fel.insert(e);
+            //COLLECT STATS
         }
         //TIME OF SERVICE AND PLANIFICATION OF NEXT ENDOFSERVICE
-        double clock1 = this.getBehavior().nextTime();
-        Event e1 = new EndOfService(this.getClock() + clock1,null,null);
+        double nextTime1 = this.getBehavior().nextTime();
+        Event e1 = new Arrival(this.getClock() + nextTime1, this.getEntity(), (ArrivalBehavior)this.getBehavior(), this.endOfServiceBehavior, this.policy);
         fel.insert(e1);
+        //COLLECT STATS
     }
 
     @Override
