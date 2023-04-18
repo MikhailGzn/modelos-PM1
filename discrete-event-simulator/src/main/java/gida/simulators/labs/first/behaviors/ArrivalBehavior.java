@@ -6,7 +6,6 @@ import gida.simulators.labs.first.utils.Randomizer;
 public class ArrivalBehavior implements Behavior {
 
     private Randomizer randomizer;
-    private int x=0;
     //private Distribution<Double> distribution;
 
     public ArrivalBehavior(Randomizer randomizer) {
