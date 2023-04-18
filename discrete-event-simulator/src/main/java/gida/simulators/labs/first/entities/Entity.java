@@ -3,7 +3,7 @@ package gida.simulators.labs.first.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.stream.events.EndElement;
+//import javax.xml.stream.events.EndElement;
 
 import gida.simulators.labs.first.events.Arrival;
 import gida.simulators.labs.first.events.Event;
