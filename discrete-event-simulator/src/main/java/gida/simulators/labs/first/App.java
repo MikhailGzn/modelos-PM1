@@ -12,5 +12,6 @@ public class App {
     public static void main(String[] args) {
         Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.OneServerOneQueue(), new UniqueServerSelectionPolicy(), new CustomRandomizer(), null);
         engine.run();
+        System.out.println("hola");
     }
 }

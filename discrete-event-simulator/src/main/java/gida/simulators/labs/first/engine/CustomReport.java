@@ -6,6 +6,7 @@ public class CustomReport implements Reportable {
     public void generateReport() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'generateReport'");
+        //aca va el reporte
     }
 
 }
