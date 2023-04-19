@@ -41,6 +41,7 @@ public class Arrival extends Event {
             double nextTime = this.endOfServiceBehavior.nextTime();
             Event e = new EndOfService(this.getClock() + nextTime,this.getEntity(),this.endOfServiceBehavior);
             fel.insert(e);
+            //COLLECT STATS
         }
         //TIME OF SERVICE AND PLANIFICATION OF NEXT ENDOFSERVICE
         double nextTime1 = this.getBehavior().nextTime();
