@@ -33,9 +33,10 @@ public class AirportSim extends Engine {
 
     @Override
     public void run() {
+        System.out.println(this.fel.toString()); 
         while(!this.getStop()){
             this.fel.getImminent().planificate(fel, servers);
-            System.out.println(this.fel.toString()); 
+
         }
     }
 }
