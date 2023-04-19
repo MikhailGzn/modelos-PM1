@@ -23,5 +23,4 @@ public class OneToManyQueuePolicy implements ServerQueuePolicy {
         // TODO Auto-generated method stub
         return null;
     }
-
 }

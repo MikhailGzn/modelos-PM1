@@ -52,7 +52,7 @@ public abstract class Server {
     public Entity dequeue() {
         return this.policy.dequeue(this.queues);
     }
-    
+
         @Override
     public String toString() {
         String ret = "id: " + this.id + " -- current entity: " + this.currentEntity.getId() + "\n"

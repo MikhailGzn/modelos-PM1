@@ -19,6 +19,7 @@ public class EndOfService extends Event {
         if(server.queuesEmpty()){
             server.setCurrentEntity(null);
             this.getEntity().setServer(null);
+            //START INITOCIO
             //COLLECT STATS
         }else{
             Entity headQueue = server.dequeue();
@@ -35,8 +36,7 @@ public class EndOfService extends Event {
     @Override
     public String toString() {
         String ret = "";
-        ret += "end of service - entity id: " + this.getEntity().getId() + " - clock: "
-                + this.getClock();
+        ret += "end of service - entity id: " + this.getEntity().getId() + " - clock: " + this.getClock();
         return ret;
     }
 }

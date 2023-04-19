@@ -5,6 +5,7 @@ import java.util.List;
 import gida.simulators.labs.first.behaviors.ArrivalBehavior;
 import gida.simulators.labs.first.behaviors.EndOfServiceBehavior;
 import gida.simulators.labs.first.engine.FutureEventList;
+import gida.simulators.labs.first.entities.Aircraft;
 import gida.simulators.labs.first.entities.Entity;
 import gida.simulators.labs.first.policies.ServerSelectionPolicy;
 import gida.simulators.labs.first.resources.Server;
@@ -35,15 +36,15 @@ public class Arrival extends Event {
         }else{
             server.setCurrentEntity(this.getEntity());
             this.getEntity().setServer(server);
+            //COLLECT STATS
             //TIME OF SERVICE AND PLANIFICATION OF NEXT ARRIVAL  
             double nextTime = this.endOfServiceBehavior.nextTime();
             Event e = new EndOfService(this.getClock() + nextTime,this.getEntity(),this.endOfServiceBehavior);
             fel.insert(e);
-            //COLLECT STATS
         }
         //TIME OF SERVICE AND PLANIFICATION OF NEXT ENDOFSERVICE
         double nextTime1 = this.getBehavior().nextTime();
-        Event e1 = new Arrival(this.getClock() + nextTime1, this.getEntity(), (ArrivalBehavior)this.getBehavior(), this.endOfServiceBehavior, this.policy);
+        Event e1 = new Arrival(this.getClock() + nextTime1, new Aircraft(this.getEntity().getId() + 1,null), (ArrivalBehavior)this.getBehavior(), this.endOfServiceBehavior, this.policy);
         fel.insert(e1);
         //COLLECT STATS
     }
