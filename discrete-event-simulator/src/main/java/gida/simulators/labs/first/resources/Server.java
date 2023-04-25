@@ -9,7 +9,7 @@ public abstract class Server {
     private int id;
     private double initOcio;
     private double totalOcio;
-    private double maxOcio;  
+    private double maxOcio;
 
     private Entity currentEntity;
     private List<Queue> queues;

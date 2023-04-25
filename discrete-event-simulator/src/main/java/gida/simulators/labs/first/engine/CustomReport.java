@@ -6,6 +6,7 @@ public class CustomReport implements Reportable {
     "                                        R E P O R T                                           \n"+
     "==============================================================================================\n"+
     "\n";
+    
     private double executeTime;
 
     private int contEntity = 0;
@@ -110,7 +111,7 @@ public class CustomReport implements Reportable {
                 "\nTiempo total de ocio de la pista: "+this.getTotalOcio()+
                 "\nPorcentaje de tiempo de ocio respecto al tiempo de simulación: "+(this.getTotalOcio()*100)/this.executeTime+"%"+
                 "\nTiempo máximo de ocio de la pista: "+this.getMaxOcio()+
-                "\nPorcentaje de tiempo de ocio: "+this.getTotalOcio()/100+"%"+
+                "\nPorcentaje de tiempo de ocio maximo: "+(this.getMaxOcio()/this.getTotalOcio())*100+"%"+
                 "\nTamaño máximo de la cola de espera: "+this.getMaxQueue()+
                 "\n==============================================================================================\n");
         System.out.println(report);

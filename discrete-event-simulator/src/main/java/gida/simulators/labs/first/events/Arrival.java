@@ -38,21 +38,18 @@ public class Arrival extends Event {
         }else{
             server.setCurrentEntity(this.getEntity());
             this.getEntity().setServer(server);
-            //System.out.println(server.getTotalOcio()+"Tiempo de Ocio");
             report.sumTotalOcio(this.getClock() - server.getInitOcio());//Ocio Server
             //TIME OF SERVICE AND PLANIFICATION OF NEXT ARRIVAL  
             double nextTime = this.endOfServiceBehavior.nextTime();
             Event e = new EndOfService(this.getClock() + nextTime,this.getEntity(),this.endOfServiceBehavior);
             fel.insert(e);
             this.getEntity().setTransitory(nextTime);//Transito de entidad X
-            //System.out.println(this.getEntity().getTransitory()+"Tiempo de Transito");
             report.sumTrasitoryTime(this.getEntity().getTransitory());//Suma Total Transito
         }
         //TIME OF SERVICE AND PLANIFICATION OF NEXT ENDOFSERVICE
         double nextTime1 = this.getBehavior().nextTime();
         Event e1 = new Arrival(this.getClock() + nextTime1, new Aircraft(this.getEntity().getId() + 1,null), (ArrivalBehavior)this.getBehavior(), this.endOfServiceBehavior, this.policy);
         fel.insert(e1);
-        //System.out.println(this.getEntity().getId()+"Id Entidad");
         report.contEntity();//Cuenta Entidad
     }
 

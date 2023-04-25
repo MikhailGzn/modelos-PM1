@@ -31,8 +31,6 @@ public class EndOfService extends Event {
             fel.insert(e);
             headQueue.setWaitTime(this.getClock() - headQueue.getInitWait());//Tiempo de espera entidad X
             headQueue.setTransitory(nextTime + headQueue.getWaitTime());//Transito de entidad X
-            //System.out.println(headQueue.getWaitTime()+"Tiempo de espera");
-            //System.out.println(headQueue.getTransitory()+"Tiempo de transito");
             report.sumTotalWait(headQueue.getWaitTime());//Suma Total Espera
             report.sumTrasitoryTime(headQueue.getTransitory());//Suma Total Transito
         }
