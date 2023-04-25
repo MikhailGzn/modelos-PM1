@@ -21,7 +21,7 @@ public class AirportSim extends Engine {
                 super(report);
                 this.fel = new FutureEventList();
                 this.fel.insert(new StopSimulation(endClock, this));
-                this.fel.insert(new Arrival(0, new Aircraft(0, null), new ArrivalBehavior(randomizer), new EndOfServiceBehavior(randomizer), policy));
+                this.fel.insert(new Arrival(0, new Aircraft(1, null), new ArrivalBehavior(randomizer), new EndOfServiceBehavior(randomizer), policy));
                 this.servers = servers;
             }
 
@@ -33,10 +33,8 @@ public class AirportSim extends Engine {
 
     @Override
     public void run() {
-        System.out.println(this.fel.toString()); 
         while(!this.getStop()){
-            this.fel.getImminent().planificate(fel, servers);
-            System.out.println(this.fel.toString()); 
+            this.fel.getImminent().planificate(fel, servers,(CustomReport)this.getReportable());
         }
     }
 }

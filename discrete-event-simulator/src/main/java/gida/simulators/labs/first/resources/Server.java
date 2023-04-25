@@ -7,6 +7,9 @@ import gida.simulators.labs.first.policies.ServerQueuePolicy;
 public abstract class Server {
 
     private int id;
+    private double initOcio;
+    private double totalOcio;
+    private double maxOcio;  
 
     private Entity currentEntity;
     private List<Queue> queues;
@@ -49,6 +52,31 @@ public abstract class Server {
 
     public Entity dequeue() {
         return this.policy.dequeue(this.queues);
+    }
+
+    public double getInitOcio() {
+        return initOcio;
+    }
+
+    public void setInitOcio(double initOcio) {
+        this.initOcio = initOcio;
+    }
+    
+    public double getTotalOcio() {
+        return this.totalOcio;
+    }
+
+    public void sumTotalOcio(double totalOcio) {
+        this.totalOcio += totalOcio;
+    }
+
+    public double getMaxOcio() {
+        return this.maxOcio;
+    }
+
+    public void maxOcio(double maxOcio) {
+        if(maxOcio > this.maxOcio)
+            this.maxOcio = maxOcio;
     }
 
         @Override
