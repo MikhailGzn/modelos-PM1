@@ -8,9 +8,9 @@ public abstract class Server {
 
     private int id;
     private double initOcio;
-    private double totalOcio;
-    private double maxOcio;  
-    private int maxLenQueue;
+    //private double totalOcio;
+    //private double maxOcio;  
+    private int lenQueue;
 
     private Entity currentEntity;
     private List<Queue> queues;
@@ -19,7 +19,7 @@ public abstract class Server {
     
     public Server(int id, List<Queue> queues, ServerQueuePolicy policy) {
         this.id = id;
-        this.maxLenQueue = 0;
+        this.lenQueue = 0;
         this.queues = queues;
         this.policy = policy;
     }
@@ -47,10 +47,10 @@ public abstract class Server {
     public boolean queuesEmpty() {
         return this.policy.queuesEmpty(this.queues);
     }
-
+    // cuando encolas te fijas la long de cola
     public void enqueue(Entity entity) {
         this.policy.enqueue(this.queues, entity);
-        maxLenQueue(this.queues.get(0).size());
+        setLenQueue(this.queues.get(0).size());
     }
     
     public Entity dequeue() {
@@ -64,29 +64,29 @@ public abstract class Server {
     public void setInitOcio(double initOcio) {
         this.initOcio = initOcio;
     }
-    
-    public double getTotalOcio() {
-        return this.totalOcio;
-    }
+    // Para mi esto ya lo hace report
 
-    public void sumTotalOcio(double totalOcio) {
-        this.totalOcio += totalOcio;
-    }
+    // public double getTotalOcio() {
+    //     return this.totalOcio;
+    // }
 
-    public double getMaxOcio() {
-        return this.maxOcio;
-    }
+    // public void sumTotalOcio(double totalOcio) {
+    //     this.totalOcio += totalOcio;
+    // }
 
-    public void maxOcio(double maxOcio) {
-        if(maxOcio > this.maxOcio)
-            this.maxOcio = maxOcio;
+    // public double getMaxOcio() {
+    //     return this.maxOcio;
+    // }
+
+    // public void maxOcio(double maxOcio) {
+    //     if(maxOcio > this.maxOcio)
+    //         this.maxOcio = maxOcio;
+    // }
+     public int getLenQueue(){
+        return this.lenQueue;
     }
-    public int getMaxLenQueue(){
-        return this.maxLenQueue;
-    }
-    public void maxLenQueue(int maxLenQueue) {
-        if(maxLenQueue > this.maxLenQueue)
-            this.maxLenQueue = maxLenQueue;
+    public void setLenQueue(int lenQueue) {        
+        this.lenQueue = lenQueue;
     }
 
         @Override

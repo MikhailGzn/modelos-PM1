@@ -33,9 +33,8 @@ public class Arrival extends Event {
         Server server = this.getPolicy().selectServer(servers);    
         if(server.isBusy()){
             // ADD TO QUEUE
-
             server.enqueue(this.getEntity());                        
-            report.setMaxQueue(server.getMaxLenQueue());
+            report.setMaxQueue(server.getLenQueue());
             this.getEntity().setInitWait(this.getClock()); //Inicio de espera entidad X
         }else{
             server.setCurrentEntity(this.getEntity());
