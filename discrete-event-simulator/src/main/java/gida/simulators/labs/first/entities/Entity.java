@@ -11,7 +11,7 @@ public abstract class Entity {
 
     private final int id;
     private double initWait;
-    private double waitTime;;
+    private double waitTime;
     private double transitory;
 
     private Server server;

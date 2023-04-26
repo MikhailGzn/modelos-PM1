@@ -29,4 +29,5 @@ public interface ServerQueuePolicy {
      * @return the entity to be dequeued from some of those queues.
      */
     Entity dequeue(List<Queue> queues);
+    
 }

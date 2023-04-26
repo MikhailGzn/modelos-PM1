@@ -8,16 +8,11 @@ import gida.simulators.labs.first.utils.CustomRandomizer;
 import gida.simulators.labs.first.utils.ScenarioBuilder;
 public class App {
 
-    private static final float SIMULATION_LENGHT = 40000f;
+    private static final float SIMULATION_LENGHT = 200f;
 
     public static void main(String[] args) {
-        int i = 0;
-        while(i<10){
-            System.out.println("Simulacion "+(i+1));
-            Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.OneServerOneQueue(), new UniqueServerSelectionPolicy(), new CustomRandomizer(), new CustomReport(SIMULATION_LENGHT));
-            engine.run();
-            engine.getReportable().generateReport();
-            i++;
-        }
+        Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.OneServerOneQueue(), new UniqueServerSelectionPolicy(), new CustomRandomizer(), new CustomReport(SIMULATION_LENGHT));
+        engine.run();
+        engine.getReportable().generateReport();
     }
 }

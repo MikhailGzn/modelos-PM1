@@ -10,14 +10,16 @@ public abstract class Server {
     private double initOcio;
     private double totalOcio;
     private double maxOcio;  
+    private int maxLenQueue;
 
     private Entity currentEntity;
     private List<Queue> queues;
-
+    
     private ServerQueuePolicy policy;
     
     public Server(int id, List<Queue> queues, ServerQueuePolicy policy) {
         this.id = id;
+        this.maxLenQueue = 0;
         this.queues = queues;
         this.policy = policy;
     }
@@ -48,8 +50,9 @@ public abstract class Server {
 
     public void enqueue(Entity entity) {
         this.policy.enqueue(this.queues, entity);
+        maxLenQueue(this.queues.get(0).size());
     }
-
+    
     public Entity dequeue() {
         return this.policy.dequeue(this.queues);
     }
@@ -77,6 +80,13 @@ public abstract class Server {
     public void maxOcio(double maxOcio) {
         if(maxOcio > this.maxOcio)
             this.maxOcio = maxOcio;
+    }
+    public int getMaxLenQueue(){
+        return this.maxLenQueue;
+    }
+    public void maxLenQueue(int maxLenQueue) {
+        if(maxLenQueue > this.maxLenQueue)
+            this.maxLenQueue = maxLenQueue;
     }
 
         @Override

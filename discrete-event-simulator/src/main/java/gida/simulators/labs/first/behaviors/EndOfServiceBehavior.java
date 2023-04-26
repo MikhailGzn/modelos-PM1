@@ -27,7 +27,7 @@ public class EndOfServiceBehavior implements Behavior {
             ret = 15;
         }else{
             ret = 20;
-        }
+        }        
         return ret;
     }
 }

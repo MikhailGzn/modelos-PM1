@@ -2,10 +2,10 @@ package gida.simulators.labs.first.engine;
 
 public class CustomReport implements Reportable {
 
-    private String report = "==============================================================================================\n"+
-    "                                        R E P O R T                                           \n"+
-    "==============================================================================================\n"+
-    "\n";
+    private String report = ""+
+    "================================================================================\n"+
+    "|                               R E P O R T                                    |\n"+
+    "================================================================================";
     private double executeTime;
 
     private int contEntity = 0;
@@ -91,29 +91,53 @@ public class CustomReport implements Reportable {
     }
 
     public void setMaxQueue(int maxQueue) {
-        if(this.maxQueue < maxQueue){
-            this.maxQueue = maxQueue;
-        }
+        this.maxQueue = maxQueue;         //Verifica el maximo en server
     }
- 
+    private double porcentajeOcio(){
+        if(this.executeTime == 0)
+            return 0;
+        else
+            return (this.totalOcio/this.executeTime)*100;
+    }
+    
+    private double porcentajeOcioMax(){
+        if(this.getTotalOcio() == 0)
+            return 0;
+        else
+            return (this.getMaxOcio()/this.getTotalOcio())*100;
+    }
+    private double meanTimeWait(){
+        if(this.contEntity == 0)
+            return 0;
+        else
+            return this.totalWait/this.contEntity;
+    }
+    private double meanTransitoryTime(){
+        if(this.contEntity == 0)
+            return 0;
+        else
+            return this.totalTransitory/this.contEntity;
+    }
     @Override
     public void generateReport() {
-        this.report = report +("                               DURACION DE LA SIMULACION: "+this.executeTime+
-                "\n==============================================================================================\n"+
-                "\nCantidad total de aeronaves que aterrizaron: "+this.getContEntity()+
-                "\nTiempo total de espera en cola: "+this.getTotalWait()+
-                "\nTiempo medio de espera en cola: "+this.getTotalWait()/this.getContEntity()+
-                "\nTiempo máximo de espera en cola: "+this.getMaxWait()+
-                "\nTiempo total de transito: "+this.getTotalTransitory()+
-                "\nTiempo medio de tránsito: "+this.getTotalTransitory()/this.getContEntity()+
-                "\nTiempo máximo de tránsito: "+this.getMaxTransitory()+
-                "\nTiempo total de ocio de la pista: "+this.getTotalOcio()+
-                "\nPorcentaje de tiempo de ocio respecto al tiempo de simulación: "+(this.getTotalOcio()*100)/this.executeTime+"%"+
-                "\nTiempo máximo de ocio de la pista: "+this.getMaxOcio()+
-                "\nPorcentaje de tiempo de ocio: "+this.getTotalOcio()/100+"%"+
-                "\nTamaño máximo de la cola de espera: "+this.getMaxQueue()+
-                "\n==============================================================================================\n");
-        System.out.println(report);
+        this.report = report +                
+                "\n| Tiempo de simulación                        | %30.2f |"+
+                "\n| Cantidad total de aeronaves que aterrizaron | %30d |"+
+                "\n| Tiempo total de espera en cola              | %30.2f |"+
+                "\n| Tiempo medio de espera en cola              | %30.2f |"+
+                "\n| Tiempo máximo de espera en cola             | %30.2f |"+
+                "\n| Tiempo total de transito                    | %30.2f |"+
+                "\n| Tiempo medio de tránsito                    | %30.2f |"+
+                "\n| Tiempo máximo de tránsito                   | %30.2f |"+
+                "\n| Tiempo total de ocio de la pista            | %30.2f |"+
+                "\n| Porcentaje de tiempo de ocio                | %30.2f |"+ 
+                "\n| Tiempo máximo de ocio de la pista           | %30.2f |"+
+                "\n| Porcentaje de tiempo de ocio maximo         | %30.2f |"+ 
+                "\n| Tamaño máximo de la cola de espera          | %30d |"+
+                "\n================================================================================\n";
+        System.out.printf(report,this.executeTime,this.getContEntity(),this.getTotalWait(),this.meanTimeWait(),this.getMaxWait(),
+        this.getTotalTransitory(),this.meanTransitoryTime(),this.getMaxTransitory(),this.getTotalOcio(),this.porcentajeOcio(),
+        this.getMaxOcio(),this.porcentajeOcioMax(),this.getMaxQueue());
     }
 
 }
