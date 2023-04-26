@@ -2,10 +2,18 @@ package gida.simulators.labs.first.engine;
 
 public class CustomReport implements Reportable {
 
+<<<<<<< HEAD
     private String report = ""+
     "================================================================================\n"+
     "|                               R E P O R T                                    |\n"+
     "================================================================================";
+=======
+    private String report = "==============================================================================================\n"+
+    "                                        R E P O R T                                           \n"+
+    "==============================================================================================\n"+
+    "\n";
+    
+>>>>>>> 2b0a69a6daf7b3fe8bc4836634940566b5876f1c
     private double executeTime;
 
     private int contEntity = 0;
@@ -120,6 +128,7 @@ public class CustomReport implements Reportable {
     }
     @Override
     public void generateReport() {
+<<<<<<< HEAD
         this.report = report +                
                 "\n| Tiempo de simulación                        | %30.2f |"+
                 "\n| Cantidad total de aeronaves que aterrizaron | %30d |"+
@@ -138,6 +147,24 @@ public class CustomReport implements Reportable {
         System.out.printf(report,this.executeTime,this.getContEntity(),this.getTotalWait(),this.meanTimeWait(),this.getMaxWait(),
         this.getTotalTransitory(),this.meanTransitoryTime(),this.getMaxTransitory(),this.getTotalOcio(),this.porcentajeOcio(),
         this.getMaxOcio(),this.porcentajeOcioMax(),this.getMaxQueue());
+=======
+        this.report = report +("                               DURACION DE LA SIMULACION: "+this.executeTime+
+                "\n==============================================================================================\n"+
+                "\nCantidad total de aeronaves que aterrizaron: "+this.getContEntity()+
+                "\nTiempo total de espera en cola: "+this.getTotalWait()+
+                "\nTiempo medio de espera en cola: "+this.getTotalWait()/this.getContEntity()+
+                "\nTiempo máximo de espera en cola: "+this.getMaxWait()+
+                "\nTiempo total de transito: "+this.getTotalTransitory()+
+                "\nTiempo medio de tránsito: "+this.getTotalTransitory()/this.getContEntity()+
+                "\nTiempo máximo de tránsito: "+this.getMaxTransitory()+
+                "\nTiempo total de ocio de la pista: "+this.getTotalOcio()+
+                "\nPorcentaje de tiempo de ocio respecto al tiempo de simulación: "+(this.getTotalOcio()*100)/this.executeTime+"%"+
+                "\nTiempo máximo de ocio de la pista: "+this.getMaxOcio()+
+                "\nPorcentaje de tiempo de ocio maximo: "+(this.getMaxOcio()/this.getTotalOcio())*100+"%"+
+                "\nTamaño máximo de la cola de espera: "+this.getMaxQueue()+
+                "\n==============================================================================================\n");
+        System.out.println(report);
+>>>>>>> 2b0a69a6daf7b3fe8bc4836634940566b5876f1c
     }
 
 }
