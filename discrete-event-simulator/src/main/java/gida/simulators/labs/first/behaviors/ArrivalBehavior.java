@@ -26,7 +26,6 @@ public class ArrivalBehavior implements Behavior {
         }else{
             ret = 20;
         }
-        ret=1;        
         return ret;
     }
 }

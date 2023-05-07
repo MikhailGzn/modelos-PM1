@@ -1,18 +1,30 @@
 package gida.simulators.labs.first;
 
-import gida.simulators.labs.first.engine.AirportSim;
-import gida.simulators.labs.first.engine.CustomReport;
-import gida.simulators.labs.first.engine.Engine;
-import gida.simulators.labs.first.policies.UniqueServerSelectionPolicy;
-import gida.simulators.labs.first.utils.CustomRandomizer;
-import gida.simulators.labs.first.utils.ScenarioBuilder;
-public class App {
 
-    private static final float SIMULATION_LENGHT = 200f;
+import javafx.application.*;
+import javafx.stage.*;
+import javafx.scene.*;
+
+import javafx.fxml.*;
+
+
+public class App extends Application{
+    @Override
+    public void start(Stage stage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("report.fxml"));
+        Parent root = loader.load();
+        ReportController controller = loader.getController();
+        
+        Scene scene = new Scene(root);
+        Stage primaryStage = new Stage();
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Simulacion de Aeropuerto (v2.0)");
+        primaryStage.show();
+     }    
+    
 
     public static void main(String[] args) {
-        Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.OneServerOneQueue(), new UniqueServerSelectionPolicy(), new CustomRandomizer(), new CustomReport(SIMULATION_LENGHT));
-        engine.run();
-        engine.getReportable().generateReport();
+        
+        javafx.application.Application.launch(args); 
     }
 }
