@@ -64,6 +64,7 @@
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
+         <!-- 
           <plugin>
             <groupId>com.gluonhq</groupId>
             <artifactId>gluonfx-maven-plugin</artifactId>
@@ -71,14 +72,19 @@
             <configuration>
                 <mainClass>your.mainClass</mainClass>
             </configuration>
-        </plugin>          
+        </plugin> -->          
         <plugin>
           <groupId>org.openjfx</groupId>
           <artifactId>javafx-maven-plugin</artifactId>
-          <version>0.0.8</version>
+          <version>0.0.6</version>
           <configuration>
-            <mainClass>HelloFX</mainClass>
-         </configuration>
+            <options>
+              <option>--module-path=${java.home}/jmods</option>
+              <option>--add-modules=javafx.controls,javafx.fxml</option>
+            </options>
+            <source>11</source>
+            <target>11</target>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>

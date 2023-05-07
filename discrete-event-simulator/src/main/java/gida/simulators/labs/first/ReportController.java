@@ -31,7 +31,7 @@ import com.opencsv.CSVWriter;
 
 //Esta clase controla la vista del reporte de la simulacion
 public class ReportController {    
-  private static final float SIMULATION_LENGHT = 200f;
+  private static final float SIMULATION_LENGHT = 40320f;
     // more fields for the other report data
   @FXML private Button simularButton;
   @FXML private Button graficosButton;
@@ -105,7 +105,19 @@ public class ReportController {
       FileWriter writer = new FileWriter(csvFile);
       // Inicializa CSVWriter
       CSVWriter csvWriter = new CSVWriter(writer);
-      
+      String [] head = {"Tiempo de simulacion", "Cantidad de aeronaves que aterrizaron"
+      ,"Tiempo total de espera en cola"
+      ,"Tiempo medio de espera en cola"
+      , "Tiempo máximo de espera en cola"
+      , "Tiempo total de transito"
+      , "Tiempo medio de tránsito"
+      , "Tiempo máximo de tránsito"
+      , "Tiempo total de ocio de la pista"
+      , "Porcentaje de tiempo de ocio"
+      , "Tiempo máximo de ocio de la pista"
+      , "Porcentaje de tiempo de ocio maximo"
+      , "Tamaño máximo de la cola de espera"};
+      csvWriter.writeNext(head);
       for(int i=0; i<100; i++){
         Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.OneServerOneQueue(), new UniqueServerSelectionPolicy(), new CustomRandomizer(), new CustomReport(SIMULATION_LENGHT));
         engine.run();      
@@ -125,6 +137,16 @@ public class ReportController {
       Process p = pb.start();
     } catch (Exception e) {
       System.out.println("Error al ejecutar el script de python");
+    }
+    
+    try {
+      String archivoImagen = "discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\results\\report.png";
+      ProcessBuilder pb = new ProcessBuilder();
+      pb.inheritIO();
+      pb.command("cmd.exe", "/c", "start", archivoImagen);
+      pb.start();
+    }catch (Exception e) {
+      System.out.println("Error al abrir la imagen");
     }
   }  
 }
