@@ -120,7 +120,7 @@ public class ReportController {
     }
     //Intanta abrir el archivo python con el python portable
     try {
-      ProcessBuilder pb = new ProcessBuilder("discrete-event-simulator\\python\\python.exe", "discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\first\\python\\manejoDatos.py");
+      ProcessBuilder pb = new ProcessBuilder("Python-Portable-3.9.6\\apps\\python.exe", "discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\first\\python\\manejoDatos.py");
       pb.inheritIO();
       Process p = pb.start();
     } catch (Exception e) {
