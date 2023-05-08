@@ -100,12 +100,13 @@ public class ReportController {
   public void handleButtonGraficos(ActionEvent event){
     // hacer algo cuando se hace clic en el botón
     try{
-      String csvFile = "discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\results\\report.csv";      
+      String csvFile = "discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\results\\report.csv";
       
       FileWriter writer = new FileWriter(csvFile);
       // Inicializa CSVWriter
       CSVWriter csvWriter = new CSVWriter(writer);
-      String [] head = {"Tiempo de simulacion", "Cantidad de aeronaves que aterrizaron"
+      String [] head = {"Tiempo de simulacion"
+      , "Cantidad de aeronaves que aterrizaron"
       ,"Tiempo total de espera en cola"
       ,"Tiempo medio de espera en cola"
       , "Tiempo máximo de espera en cola"
@@ -118,7 +119,7 @@ public class ReportController {
       , "Porcentaje de tiempo de ocio maximo"
       , "Tamaño máximo de la cola de espera"};
       csvWriter.writeNext(head);
-      for(int i=0; i<100; i++){
+      for(int i=0; i<1024; i++){
         Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.OneServerOneQueue(), new UniqueServerSelectionPolicy(), new CustomRandomizer(), new CustomReport(SIMULATION_LENGHT));
         engine.run();      
         //Escribe el reporte      
@@ -135,6 +136,7 @@ public class ReportController {
       ProcessBuilder pb = new ProcessBuilder("Python-Portable-3.9.6\\apps\\python.exe", "discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\first\\python\\manejoDatos.py");
       pb.inheritIO();
       Process p = pb.start();
+      p.waitFor();
     } catch (Exception e) {
       System.out.println("Error al ejecutar el script de python");
     }

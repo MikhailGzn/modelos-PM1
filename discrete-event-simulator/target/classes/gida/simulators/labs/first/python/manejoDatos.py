@@ -15,8 +15,14 @@ import seaborn as sns
 ###########################################
 df = pd.read_csv('discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\results\\report.csv')
 df.drop(df.columns[df.columns.str.contains('Tiempo de simulacion',case = False)],axis = 1, inplace = True)
+df.drop(df.columns[df.columns.str.contains('Tiempo total de transito',case = False)],axis = 1, inplace = True)
+df.drop(df.columns[df.columns.str.contains('Tiempo total de espera en cola',case = False)],axis = 1, inplace = True)
+df.drop(df.columns[df.columns.str.contains('Tiempo total de ocio de la pista',case = False)],axis = 1, inplace = True)
+df.drop(df.columns[df.columns.str.contains('Cantidad de aeronaves que aterrizaron',case = False)],axis = 1, inplace = True)
+print(df.head())
+plt.figure(figsize=(10, 6))
 
-# Draw a pointplot to show pulse as a function of three categorical factors
+
 g = sns.catplot(
     data=df ,
     capsize=.1, palette="YlGnBu_d", errorbar="se",
@@ -24,4 +30,4 @@ g = sns.catplot(
 plt.xticks(rotation=45)
 g.despine(left=True)
 # ahora lo guardo en una imagen
-plt.savefig('discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\results\\report.png')
+plt.savefig('discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\results\\report.png', dpi=300, bbox_inches='tight')

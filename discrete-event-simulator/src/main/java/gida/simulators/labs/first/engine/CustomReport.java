@@ -1,5 +1,5 @@
 package gida.simulators.labs.first.engine;
-
+import java.util.Locale;
 public class CustomReport implements Reportable {
 
     private String report;
@@ -119,9 +119,20 @@ public class CustomReport implements Reportable {
     }
     @Override
     public String[] generateReport() {        
-        String[] reportStrings= {""+this.executeTime,""+this.getContEntity(),""+this.getTotalWait(),""+this.meanTimeWait(),""+this.getMaxWait(),
-            ""+this.getTotalTransitory(),""+this.meanTransitoryTime(),""+this.getMaxTransitory(),""+this.getTotalOcio(),""+this.porcentajeOcio(),
-            ""+this.getMaxOcio(),""+this.porcentajeOcioMax(),""+this.getMaxQueue()};       
+        String[] reportStrings = {String.format(Locale.US, "%.2f", this.executeTime),
+                          String.valueOf(this.getContEntity()),
+                          String.format(Locale.US, "%.2f", this.getTotalWait()),
+                          String.format(Locale.US, "%.2f", this.meanTimeWait()),
+                          String.format(Locale.US, "%.2f", this.getMaxWait()),
+                          String.format(Locale.US, "%.2f", this.getTotalTransitory()),
+                          String.format(Locale.US, "%.2f", this.meanTransitoryTime()),
+                          String.format(Locale.US, "%.2f", this.getMaxTransitory()),
+                          String.format(Locale.US, "%.2f", this.getTotalOcio()),
+                          String.format(Locale.US, "%.2f", this.porcentajeOcio()),
+                          String.format(Locale.US, "%.2f", this.getMaxOcio()),
+                          String.format(Locale.US, "%.2f", this.porcentajeOcioMax()),
+                          String.valueOf(this.getMaxQueue())};
+
         return reportStrings;
     }    
 }
