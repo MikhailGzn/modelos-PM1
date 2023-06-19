@@ -100,7 +100,7 @@ public class ReportController {
   public void handleButtonGraficos(ActionEvent event){
     // hacer algo cuando se hace clic en el botón
     try{
-      String csvFile = "discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\results\\report.csv";
+      String csvFile = "src\\main\\java\\gida\\simulators\\labs\\results\\report.csv";
       
       FileWriter writer = new FileWriter(csvFile);
       // Inicializa CSVWriter
@@ -133,7 +133,7 @@ public class ReportController {
     }
     //Intanta abrir el archivo python con el python portable
     try {
-      ProcessBuilder pb = new ProcessBuilder("Python-Portable-3.9.6\\apps\\python.exe", "discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\first\\python\\manejoDatos.py");
+      ProcessBuilder pb = new ProcessBuilder("Python-Portable-3.9.6\\apps\\python.exe", "src\\main\\java\\gida\\simulators\\labs\\first\\python\\manejoDatos.py");
       pb.inheritIO();
       Process p = pb.start();
       p.waitFor();
@@ -142,7 +142,7 @@ public class ReportController {
     }
     
     try {
-      String archivoImagen = "discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\results\\report.png";
+      String archivoImagen = "src\\main\\java\\gida\\simulators\\labs\\results\\report.png";
       ProcessBuilder pb = new ProcessBuilder();
       pb.inheritIO();
       pb.command("cmd.exe", "/c", "start", archivoImagen);

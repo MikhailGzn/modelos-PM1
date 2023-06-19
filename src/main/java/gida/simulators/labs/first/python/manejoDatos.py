@@ -13,7 +13,7 @@ import seaborn as sns
 # Imprimir la salida del comando pip
 #print(result.stdout)
 ###########################################
-df = pd.read_csv('discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\results\\report.csv')
+df = pd.read_csv('src\\main\\java\\gida\\simulators\\labs\\results\\report.csv')
 df.drop(df.columns[df.columns.str.contains('Tiempo de simulacion',case = False)],axis = 1, inplace = True)
 df.drop(df.columns[df.columns.str.contains('Tiempo total de transito',case = False)],axis = 1, inplace = True)
 df.drop(df.columns[df.columns.str.contains('Tiempo total de espera en cola',case = False)],axis = 1, inplace = True)
@@ -30,4 +30,4 @@ g = sns.catplot(
 plt.xticks(rotation=45)
 g.despine(left=True)
 # ahora lo guardo en una imagen
-plt.savefig('discrete-event-simulator\\src\\main\\java\\gida\\simulators\\labs\\results\\report.png', dpi=300, bbox_inches='tight')
+plt.savefig('src\\main\\java\\gida\\simulators\\labs\\results\\report.png', dpi=300, bbox_inches='tight')
