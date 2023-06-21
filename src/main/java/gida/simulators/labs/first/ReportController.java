@@ -17,12 +17,20 @@ import javafx.scene.text.*;
 import javafx.scene.control.Label;
 
 import java.lang.ProcessBuilder;
+import java.util.List;
 
 import gida.simulators.labs.first.engine.AirportSim;
 import gida.simulators.labs.first.engine.CustomReport;
 import gida.simulators.labs.first.engine.Engine;
+import gida.simulators.labs.first.engine.Reportable;
+import gida.simulators.labs.first.policies.OneToManyQueuePolicy;
+import gida.simulators.labs.first.policies.OneToOneQueuePolicy;
+import gida.simulators.labs.first.policies.ServerSelectionPolicy;
+import gida.simulators.labs.first.policies.ShortherQueueServerSelectionPolicy;
 import gida.simulators.labs.first.policies.UniqueServerSelectionPolicy;
+import gida.simulators.labs.first.resources.Server;
 import gida.simulators.labs.first.utils.CustomRandomizer;
+import gida.simulators.labs.first.utils.Randomizer;
 import gida.simulators.labs.first.utils.ScenarioBuilder;
 
 import java.io.FileWriter;
@@ -70,7 +78,7 @@ public class ReportController {
   public void handleButtonSimular(ActionEvent event) {    
     String[] reporte;        
     //Simula
-    Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.OneServerOneQueue(), new UniqueServerSelectionPolicy(), new CustomRandomizer(), new CustomReport(SIMULATION_LENGHT));
+    Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.nServersNqueques(3), new ShortherQueueServerSelectionPolicy(), new CustomRandomizer(), new CustomReport(SIMULATION_LENGHT));    
     engine.run();      
     reporte = engine.getReportable().generateReport();    
     reportTextArea.setText(String.join("\n", reporte));
@@ -120,7 +128,7 @@ public class ReportController {
       , "Tamaño máximo de la cola de espera"};
       csvWriter.writeNext(head);
       for(int i=0; i<1024; i++){
-        Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.OneServerOneQueue(), new UniqueServerSelectionPolicy(), new CustomRandomizer(), new CustomReport(SIMULATION_LENGHT));
+        Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.nServersNqueques(3), new ShortherQueueServerSelectionPolicy(), new CustomRandomizer(), new CustomReport(SIMULATION_LENGHT));
         engine.run();      
         //Escribe el reporte      
         csvWriter.writeNext(engine.getReportable().generateReport());          

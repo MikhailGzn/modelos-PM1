@@ -4,13 +4,16 @@ import java.util.List;
 
 import gida.simulators.labs.first.behaviors.ArrivalBehavior;
 import gida.simulators.labs.first.behaviors.EndOfServiceBehavior;
+import gida.simulators.labs.first.behaviors.MaintenanceBehavior;
 import gida.simulators.labs.first.entities.Aircraft;
 import gida.simulators.labs.first.events.Arrival;
+import gida.simulators.labs.first.events.Maintenance;
 import gida.simulators.labs.first.events.StopSimulation;
+import gida.simulators.labs.first.policies.MaintenancePolicy;
 import gida.simulators.labs.first.policies.ServerSelectionPolicy;
 import gida.simulators.labs.first.resources.Server;
 import gida.simulators.labs.first.utils.Randomizer;
-
+import gida.simulators.labs.first.behaviors.EndOfMaintenanceBehavior;
 public class AirportSim extends Engine {
 
     private FutureEventList fel;
@@ -21,7 +24,8 @@ public class AirportSim extends Engine {
                 super(report);
                 this.fel = new FutureEventList();
                 this.fel.insert(new StopSimulation(endClock, this));
-                this.fel.insert(new Arrival(0, new Aircraft(1, null), new ArrivalBehavior(randomizer), new EndOfServiceBehavior(randomizer), policy));
+                this.fel.insert(new Arrival(0, new Aircraft(1, null), new ArrivalBehavior(randomizer,40), new EndOfServiceBehavior(randomizer), policy));
+                this.fel.insert(new Maintenance(0, new MaintenanceBehavior(randomizer,300,30), new EndOfMaintenanceBehavior(randomizer),new MaintenancePolicy()));
                 this.servers = servers;
             }
 

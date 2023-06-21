@@ -1,23 +1,32 @@
 package gida.simulators.labs.first.engine;
 import java.util.Locale;
+
+import gida.simulators.labs.first.resources.Server;
 public class CustomReport implements Reportable {
 
     private String report;
     private double executeTime;
 
     private int contEntity = 0;
+    private int contEntityXserver[] = {0,0,0,0,0,0,0,0,0};
     private double totalWait = 0;
     private double totalTransitory = 0;
-    private double totalOcio = 0;
+    private double totalOcio[] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
     private double maxWait = 0;
     private double maxTransitory = 0;
     private double maxOcio = 0;
     private int maxQueue = 0;
+    private double durabilidad[] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
     public CustomReport(double executeTime){
         this.executeTime = executeTime;
     }
-
+    public void setDurabilidad(double durabilidad,int server){
+        this.durabilidad[server]= durabilidad;
+    }
+    public double getDurabilidad(int server){
+        return this.durabilidad[server];
+    }
     public double getTotalWait(){
         return this.totalWait;
     }
@@ -36,13 +45,13 @@ public class CustomReport implements Reportable {
         this.totalTransitory += partTransitory;
     }
 
-    public double getTotalOcio(){
-        return this.totalOcio;
+    public double getTotalOcio(int server){
+        return this.totalOcio[server];
     }
 
-    public void sumTotalOcio(double totalOcio){
+    public void sumTotalOcio(double totalOcio, int server){
         this.setMaxOcio(totalOcio);
-        this.totalOcio += totalOcio;
+        this.totalOcio[server] += totalOcio;
     }
 
     public int getContEntity(){
@@ -53,6 +62,9 @@ public class CustomReport implements Reportable {
         this.contEntity += 1;
     }
 
+    public void contEntityXServer(int id){
+        this.contEntityXserver[id] += 1;
+    }
     public double getMaxWait(){
         return this.maxWait;
     }
@@ -92,19 +104,19 @@ public class CustomReport implements Reportable {
             this.maxQueue = maxQueue;
         }
     }
-    private double porcentajeOcio(){
+    /*private double porcentajeOcio(){
         if(this.executeTime == 0)
             return 0;
         else
             return (this.totalOcio/this.executeTime)*100;
-    }
+    }*/
     
-    private double porcentajeOcioMax(){
+    /*private double porcentajeOcioMax(){
         if(this.getTotalOcio() == 0)
             return 0;
         else
             return (this.getMaxOcio()/this.getTotalOcio())*100;
-    }
+    }*/
     private double meanTimeWait(){
         if(this.contEntity == 0)
             return 0;
@@ -121,18 +133,16 @@ public class CustomReport implements Reportable {
     public String[] generateReport() {        
         String[] reportStrings = {String.format(Locale.US, "%.2f", this.executeTime),
                           String.valueOf(this.getContEntity()),
-                          String.format(Locale.US, "%.2f", this.getTotalWait()),
-                          String.format(Locale.US, "%.2f", this.meanTimeWait()),
-                          String.format(Locale.US, "%.2f", this.getMaxWait()),
-                          String.format(Locale.US, "%.2f", this.getTotalTransitory()),
-                          String.format(Locale.US, "%.2f", this.meanTransitoryTime()),
-                          String.format(Locale.US, "%.2f", this.getMaxTransitory()),
-                          String.format(Locale.US, "%.2f", this.getTotalOcio()),
-                          String.format(Locale.US, "%.2f", this.porcentajeOcio()),
-                          String.format(Locale.US, "%.2f", this.getMaxOcio()),
-                          String.format(Locale.US, "%.2f", this.porcentajeOcioMax()),
+                          "Cantidad entidades aircraft"+String.valueOf(this.contEntityXserver[0]),
+                            "Cantidad entidades aircraft"+String.valueOf(this.contEntityXserver[1]),
+                            "Cantidad entidades aircraft"+String.valueOf(this.contEntityXserver[2]),
+                          "Total ocio 1 "+String.format(Locale.US, "%.2f", this.getTotalOcio(0)),
+                          "Total ocio 2 "+String.format(Locale.US, "%.2f", this.getTotalOcio(1)),
+                          "Total ocio 3 "+String.format(Locale.US, "%.2f", this.getTotalOcio(2)),
+                          "Total durabilidad 1 "+String.format(Locale.US, "%.2f", this.durabilidad[0]),
+                            "Total durabilidad 2 "+String.format(Locale.US, "%.2f", this.durabilidad[1]),
+                            "Total durabilidad 3 "+String.format(Locale.US, "%.2f", this.durabilidad[2]),
                           String.valueOf(this.getMaxQueue())};
-
         return reportStrings;
     }    
 }

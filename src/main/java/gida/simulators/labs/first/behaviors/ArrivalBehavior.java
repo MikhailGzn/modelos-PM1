@@ -6,9 +6,10 @@ import gida.simulators.labs.first.utils.Randomizer;
 public class ArrivalBehavior implements Behavior {
 
     private Randomizer randomizer;
-
-    public ArrivalBehavior(Randomizer randomizer) {
+    private double mu;
+    public ArrivalBehavior(Randomizer randomizer, double mu) {
         this.randomizer =  randomizer;
+        this.mu = mu;
     }
 
     /**
@@ -18,14 +19,9 @@ public class ArrivalBehavior implements Behavior {
     @Override
     public double nextTime() {
         double r = this.randomizer.nextRandom();
-        double ret;
-        if(r < 0.3){
-            ret = 10;
-        }else if(r < 0.7){
-            ret = 15;
-        }else{
-            ret = 20;
-        }
-        return ret;
+        return (-mu)*Math.log(1-r);
+    }    
+    public void setMu(double mu){
+        this.mu = mu;
     }
 }

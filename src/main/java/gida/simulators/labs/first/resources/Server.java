@@ -8,10 +8,7 @@ public abstract class Server {
 
     private int id;
     private double initOcio;
-    //private double totalOcio;
-    //private double maxOcio;  
     private int lenQueue;
-
     private Entity currentEntity;
     private List<Queue> queues;
     
@@ -23,7 +20,6 @@ public abstract class Server {
         this.queues = queues;
         this.policy = policy;
     }
-
     public int getId() {
         return this.id;
     }
@@ -64,24 +60,6 @@ public abstract class Server {
     public void setInitOcio(double initOcio) {
         this.initOcio = initOcio;
     }
-    // Para mi esto ya lo hace report
-
-    // public double getTotalOcio() {
-    //     return this.totalOcio;
-    // }
-
-    // public void sumTotalOcio(double totalOcio) {
-    //     this.totalOcio += totalOcio;
-    // }
-
-    // public double getMaxOcio() {
-    //     return this.maxOcio;
-    // }
-
-    // public void maxOcio(double maxOcio) {
-    //     if(maxOcio > this.maxOcio)
-    //         this.maxOcio = maxOcio;
-    // }
      public int getLenQueue(){
         return this.lenQueue;
     }

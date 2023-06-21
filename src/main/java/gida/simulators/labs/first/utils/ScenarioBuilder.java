@@ -18,7 +18,16 @@ public class ScenarioBuilder {
         servers.add(new Airstrip(0,queues,new OneToOneQueuePolicy()));
         return servers;
      }
-
+     public static List<Server> nServersNqueques(int n){
+        List<Server> servers = new ArrayList<>();
+        List<Queue> queues = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            queues.add(new CustomQueue(0));
+            servers.add(new Airstrip(i,queues,new OneToOneQueuePolicy()));
+            servers.get(i).setInitOcio(0.0);
+        }
+        return servers;
+     }
 //    public static List<Server> OneServerMultipleQueues(int queuesQuantity) {}
 
 //    public static List<Server> multipleServersOneQueue(int queuesQuantity) {}
