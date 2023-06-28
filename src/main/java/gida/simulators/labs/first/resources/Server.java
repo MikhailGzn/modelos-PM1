@@ -1,10 +1,9 @@
 package gida.simulators.labs.first.resources;
-
 import java.util.List;
 import gida.simulators.labs.first.entities.Entity;
 import gida.simulators.labs.first.policies.ServerQueuePolicy;
 
-public abstract class Server {
+public abstract class Server { 
 
     private int id;
     private double initOcio;
@@ -67,7 +66,7 @@ public abstract class Server {
         this.lenQueue = lenQueue;
     }
 
-        @Override
+    @Override
     public String toString() {
         String ret = "id: " + this.id + " -- current entity: " + this.currentEntity.getId() + "\n"
                 + "queues:\n";

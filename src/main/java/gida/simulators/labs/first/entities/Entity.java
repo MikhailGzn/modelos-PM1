@@ -16,6 +16,7 @@ public abstract class Entity {
 
     private Server server;
     private List<Event> events;
+    
 
     public Entity(int id, Arrival arrival) {
         this.id = id;

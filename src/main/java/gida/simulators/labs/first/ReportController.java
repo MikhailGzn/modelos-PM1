@@ -78,7 +78,7 @@ public class ReportController {
   public void handleButtonSimular(ActionEvent event) {    
     String[] reporte;        
     //Simula
-    Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.nServersNqueques(3), new ShortherQueueServerSelectionPolicy(), new CustomRandomizer(), new CustomReport(SIMULATION_LENGHT));    
+    Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.nServersNqueques(3,4,2), new ShortherQueueServerSelectionPolicy(), new CustomRandomizer(), new CustomReport(SIMULATION_LENGHT));    
     engine.run();      
     reporte = engine.getReportable().generateReport();    
     reportTextArea.setText(String.join("\n", reporte));
@@ -128,7 +128,7 @@ public class ReportController {
       , "Tamaño máximo de la cola de espera"};
       csvWriter.writeNext(head);
       for(int i=0; i<1024; i++){
-        Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.nServersNqueques(3), new ShortherQueueServerSelectionPolicy(), new CustomRandomizer(), new CustomReport(SIMULATION_LENGHT));
+        Engine engine = new AirportSim(SIMULATION_LENGHT, ScenarioBuilder.nServersNqueques(3,4,2), new ShortherQueueServerSelectionPolicy(), new CustomRandomizer(), new CustomReport(SIMULATION_LENGHT));
         engine.run();      
         //Escribe el reporte      
         csvWriter.writeNext(engine.getReportable().generateReport());          

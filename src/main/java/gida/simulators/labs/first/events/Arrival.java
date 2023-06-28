@@ -2,28 +2,30 @@ package gida.simulators.labs.first.events;
 
 import java.util.List;
 
-import gida.simulators.labs.first.behaviors.ArrivalBehavior;
-import gida.simulators.labs.first.behaviors.ArrivalBehaviorLiviano;
-import gida.simulators.labs.first.behaviors.EndOfServiceBehavior;
+import gida.simulators.labs.first.behaviors.*;
 import gida.simulators.labs.first.engine.CustomReport;
 import gida.simulators.labs.first.engine.FutureEventList;
-import gida.simulators.labs.first.entities.Aircraft;
+import gida.simulators.labs.first.entities.AircraftType;
 import gida.simulators.labs.first.entities.Entity;
+import gida.simulators.labs.first.entities.Maintenance;
 import gida.simulators.labs.first.policies.ServerSelectionPolicy;
 import gida.simulators.labs.first.resources.Airstrip;
 import gida.simulators.labs.first.resources.Server;
 
+
+import gida.simulators.labs.first.behaviors.ArrivalBehaviorLiviano;
 public class Arrival extends Event {
     
     private ServerSelectionPolicy policy;
 
-    private EndOfServiceBehavior endOfServiceBehavior;
-
-    public Arrival(double clock, Entity entity, ArrivalBehavior behavior,
-            EndOfServiceBehavior endOfServiceBehavior, ServerSelectionPolicy policy) {
+    private Behavior endOfServiceBehavior;
+    private Behavior durabilidadBehavior;
+    public Arrival(double clock, Entity entity, Behavior behavior,
+            Behavior endOfServiceBehavior,Behavior durabilidadBehavior, ServerSelectionPolicy policy) {
                 super(clock,entity,behavior,2);
                 this.endOfServiceBehavior = endOfServiceBehavior;
                 this.policy = policy;
+                this.durabilidadBehavior = durabilidadBehavior;
     }
 
     public ServerSelectionPolicy getPolicy() {
@@ -32,38 +34,63 @@ public class Arrival extends Event {
 
     @Override
     public void planificate(FutureEventList fel, List<Server> servers,CustomReport report) {
-        Airstrip server = (Airstrip) this.getPolicy().selectServer(servers);            
-        server.desgastar();
-        if(server.isBusy()){
-            // ADD TO QUEUE
-            server.enqueue(this.getEntity());                        
-            report.setMaxQueue(server.getLenQueue());
-            this.getEntity().setInitWait(this.getClock()); //Inicio de espera entidad X
-        }else{
-            server.setCurrentEntity(this.getEntity());
-            this.getEntity().setServer(server);
-            report.sumTotalOcio(this.getClock() - server.getInitOcio(),server.getId());//Ocio Server
-            //TIME OF SERVICE AND PLANIFICATION OF NEXT ARRIVAL  
-            double nextTime = this.endOfServiceBehavior.nextTime();
-            Event e = new EndOfService(this.getClock() + nextTime,this.getEntity(),this.endOfServiceBehavior);
-            fel.insert(e);
-            this.getEntity().setTransitory(nextTime);//Transito de entidad X
-            report.sumTrasitoryTime(this.getEntity().getTransitory());//Suma Total Transito
+        Airstrip server = (Airstrip) this.getPolicy().selectServer(servers,this.getEntity());                    
+        if (server != null){ //server es null si todos estan en mantenimiento y se busca hacer otro mantenimiento, en ese caso no lo pongo en cola ni lo atiendo
+            if(this.getEntity() instanceof Maintenance){ //Si se planifica un mantenimiento se setea el modo de mantenimiento
+                server.setMaintMode(true);
+            }
+            if(server.isBusy()){
+                // ADD TO QUEUE
+                server.enqueue(this.getEntity());   //Aqui set server?                     
+                report.setMaxQueue(server.getLenQueue()); 
+                this.getEntity().setInitWait(this.getClock()); //Inicio de espera entidad X
+            }else{
+                server.setCurrentEntity(this.getEntity());
+                this.getEntity().setServer(server);
+                report.sumTotalOcio(this.getClock() - server.getInitOcio(),server.getId());//Ocio Server
+                //TIME OF SERVICE AND PLANIFICATION OF NEXT ARRIVAL  
+                double nextTime = this.endOfServiceBehavior.nextTime();
+                Event e = new EndOfService(this.getClock() + nextTime,this.getEntity(),this.endOfServiceBehavior,this.durabilidadBehavior);
+                fel.insert(e);
+                this.getEntity().setTransitory(nextTime);//Transito de entidad X
+                report.sumTrasitoryTime(this.getEntity().getTransitory());//Suma Total Transito
+            }
         }
         //TIME OF SERVICE AND PLANIFICATION OF NEXT ENDOFSERVICE                
         double nextTime1 = this.getBehavior().nextTime();
         int reloj=(int)(this.getClock()+nextTime1);
-        reloj = reloj%1440;
-        ArrivalBehavior behavior = (ArrivalBehavior)this.getBehavior(); //Manejo de la hora pico
-        if ((reloj<600 && reloj>420) || (reloj>1140 && reloj<1320)){
-            behavior.setMu(20);
+        reloj = reloj%1440; //modulo 24hs=1440min, asi vemos que hora es. 
+        Entity entity = null;
+        if (this.getEntity() instanceof AircraftType){
+            entity = new AircraftType(this.getEntity().getId()+1,((AircraftType)this.getEntity()).getType(), null);
+            if ((reloj<600 && reloj>420) || (reloj>1140 && reloj<1320)){  //Las horas pico pasadas a minutos           
+                if(this.getBehavior() instanceof ArrivalBehaviorLiviano){
+                    ((ArrivalBehaviorLiviano)this.getBehavior()).setMu(20);
+                }
+                if(this.getBehavior() instanceof ArrivalBehaviorMedio){
+                    ((ArrivalBehaviorMedio)this.getBehavior()).setMu(15);
+                }                           
+                if(this.getBehavior() instanceof ArrivalBehaviorPesado){
+                    ((ArrivalBehaviorPesado)this.getBehavior()).setMu(30);
+                }                 
+            }
+            else{
+                if(this.getBehavior() instanceof ArrivalBehaviorLiviano){
+                    ((ArrivalBehaviorLiviano)this.getBehavior()).setMu(40);
+                }
+                if(this.getBehavior() instanceof ArrivalBehaviorMedio){
+                    ((ArrivalBehaviorMedio)this.getBehavior()).setMu(30);
+                }                           
+                if(this.getBehavior() instanceof ArrivalBehaviorPesado){
+                    ((ArrivalBehaviorPesado)this.getBehavior()).setMu(60);
+                }                 
+            }
         }
         else{
-            behavior.setMu(40);
+            entity = new Maintenance(this.getEntity().getId()+1, null);
         }
-        Event e1 = new Arrival(this.getClock() + nextTime1, new Aircraft(this.getEntity().getId() + 1,null), behavior, this.endOfServiceBehavior, this.policy);
+        Event e1 = new Arrival(this.getClock() + nextTime1, entity, this.getBehavior(), this.endOfServiceBehavior, this.durabilidadBehavior,this.policy);
         fel.insert(e1);
-        report.setDurabilidad(server.getDurabilidad(),server.getId());
         report.contEntity();//Cuenta Entidad
         report.contEntityXServer(server.getId());//Cuenta Entidad X Server
     }

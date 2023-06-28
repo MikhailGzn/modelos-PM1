@@ -8,15 +8,15 @@ public class CustomReport implements Reportable {
     private double executeTime;
 
     private int contEntity = 0;
-    private int contEntityXserver[] = {0,0,0,0,0,0,0,0,0};
+    private int contEntityXserver[] = {0,0,0,0,0,0,0,0,0,0};
     private double totalWait = 0;
     private double totalTransitory = 0;
-    private double totalOcio[] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+    private double totalOcio[] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
     private double maxWait = 0;
     private double maxTransitory = 0;
     private double maxOcio = 0;
     private int maxQueue = 0;
-    private double durabilidad[] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+    private double durabilidad[] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
     public CustomReport(double executeTime){
         this.executeTime = executeTime;

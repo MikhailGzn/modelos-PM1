@@ -1,13 +1,12 @@
 package gida.simulators.labs.first.behaviors;
 import gida.simulators.labs.first.utils.Randomizer;
-public class EndOfMaintenanceBehavior implements Behavior{
-    private Randomizer randomizer;
+public class EndOfMaintenanceBehavior extends EndOfServiceBehavior{
     public EndOfMaintenanceBehavior(Randomizer randomizer) {
-        this.randomizer = randomizer;
+        super(randomizer);
     }
     @Override
     public double nextTime() {
-        double random = this.randomizer.nextRandom();      
-        return 12*random+12;
+        double random = super.getRandomizer().nextRandom();      
+        return 720*random+720;
     }
 }

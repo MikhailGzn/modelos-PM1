@@ -1,11 +1,11 @@
 package gida.simulators.labs.first.behaviors;
-import gida.simulators.labs.first.behaviors.ArrivalBehavior;
+
 import gida.simulators.labs.first.utils.Randomizer;
 //import gida.simulators.labs.first.utils.distributions.Distribution;
 
-public class ArrivalBehaviorLiviano extends ArrivalBehavior {
+public class ArrivalBehaviorMedio extends ArrivalBehavior {
     double mu;
-    public ArrivalBehaviorLiviano(Randomizer randomizer, double mu) {
+    public ArrivalBehaviorMedio(Randomizer randomizer, double mu) {
         super(randomizer);
         this.mu = mu;
     }

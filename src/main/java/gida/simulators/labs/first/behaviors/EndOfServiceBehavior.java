@@ -28,4 +28,7 @@ public class EndOfServiceBehavior implements Behavior {
         }        
         return ret;
     }
+    public Randomizer getRandomizer() {
+        return randomizer;
+    }
 }
