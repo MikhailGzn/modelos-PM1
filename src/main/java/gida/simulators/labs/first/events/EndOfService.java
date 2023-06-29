@@ -5,6 +5,7 @@ import java.util.List;
 import gida.simulators.labs.first.behaviors.EndOfServiceBehavior;
 import gida.simulators.labs.first.engine.CustomReport;
 import gida.simulators.labs.first.engine.FutureEventList;
+import gida.simulators.labs.first.entities.AircraftType;
 import gida.simulators.labs.first.entities.Entity;
 import gida.simulators.labs.first.resources.Airstrip;
 import gida.simulators.labs.first.resources.Server;
@@ -20,10 +21,11 @@ public class EndOfService extends Event {
     public void planificate(FutureEventList fel, List<Server> servers,CustomReport report) {
         Entity entity = this.getEntity();
         Airstrip server = (Airstrip)entity.getServer();
-        report.setDurabilidad(server.getDurabilidad(),server.getId());
+        report.setDurabilidadXserver(server.getDurabilidad(),server.getId());
         double changeDurabilidad = this.durabilidadBehavior.nextTime(); 
         if(changeDurabilidad<0){ //Por como construimos el DurabilidadBehavior, en airportSim, si es mantenimiento retorna negativo
-            server.alterDurabilidad(server.getDurabilidad()*0.15);    
+            server.setMaintMode(false);
+            server.alterDurabilidad(server.getDurabilidad()*0.15);    //Y si no tiene mas durabilidad?
             System.out.println("Mantenimiento en server: "+server.getId()+" Durabilidad: "+server.getDurabilidad());
         }
         else{
@@ -43,8 +45,12 @@ public class EndOfService extends Event {
             fel.insert(e);
             headQueue.setWaitTime(this.getClock() - headQueue.getInitWait());//Tiempo de espera entidad X
             headQueue.setTransitory(nextTime + headQueue.getWaitTime());//Transito de entidad X
-            report.sumTotalWait(headQueue.getWaitTime());//Suma Total Espera
-            report.sumTrasitoryTime(headQueue.getTransitory());//Suma Total Transito
+            if (headQueue instanceof AircraftType){ //Si es un avion
+                report.sumTotalWait(headQueue.getWaitTime());//Suma Total Espera
+                report.sumTrasitoryTime(headQueue.getTransitory());//Suma Total Transito
+                report.sumTotalWaitXtype(headQueue.getWaitTime(), ((AircraftType) headQueue).getType());
+                report.sumTrasitoryTimeXtype(headQueue.getTransitory(), ((AircraftType) headQueue).getType());
+            }
         }
     }
 
