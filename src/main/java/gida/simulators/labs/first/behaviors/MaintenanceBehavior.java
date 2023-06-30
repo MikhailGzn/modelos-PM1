@@ -13,13 +13,15 @@ public class MaintenanceBehavior implements Behavior{
         this.mu = mu;
         this.sigma = sigma;
     }
+    //Aproximamos la distribucion normal con la distribucion uniforme, para ello usamos el teorema del limite central
     @Override
     public double nextTime() {
-        double sum = 0;
+        double sum = 0.0;
         for(int i = 0; i < N; i++){
             sum += this.randomizer.nextRandom();
         }
-        return ((sum-N*(0.5)*sigma)/(Math.sqrt(12.0*N)))+mu;
+        double auxiliar = ((sum-N*(0.5))/(Math.sqrt(N/12.0)));
+        return auxiliar*sigma+mu;
+        
     }    
-
 }

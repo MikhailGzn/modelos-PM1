@@ -17,7 +17,7 @@ public class App extends Application{
         primaryStage.show();
      }    
     public static void main(String[] args) {
-        
-        javafx.application.Application.launch(args); 
+
+        javafx.application.Application.launch(args);
     }
 }

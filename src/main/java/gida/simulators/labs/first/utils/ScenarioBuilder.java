@@ -20,22 +20,25 @@ public class ScenarioBuilder {
      }
      public static List<Server> nServersNqueques(int cantLivianos, int cantMedios, int cantPesados){
         List<Server> servers = new ArrayList<>();
-        List<Queue> queues = new ArrayList<>();
-        queues.add(new CustomQueue(0));
-        servers.add(new Airstrip(0,queues,new OneToOneQueuePolicy(),250,-1)); //Pista auxiliar
+        List<Queue> queues0 = new ArrayList<>();
+        queues0.add(new CustomQueue(0));
+        servers.add(new Airstrip(0,queues0,new OneToOneQueuePolicy(),250,-1)); //Pista auxiliar
         servers.get(0).setInitOcio(0.0);        
         for (int i = 1; i < cantLivianos+1; i++) {
-            queues.add(new CustomQueue(i));
+            List<Queue> queues = new ArrayList<>();
+            queues.add(new CustomQueue(0));
             servers.add(new Airstrip(i,queues,new OneToOneQueuePolicy(),1000,0));
             servers.get(i).setInitOcio(0.0);
         }
         for (int i = cantLivianos+1; i < cantMedios+cantLivianos+1; i++) {
-            queues.add(new CustomQueue(i));
+            List<Queue> queues = new ArrayList<>();
+            queues.add(new CustomQueue(0));
             servers.add(new Airstrip(i,queues,new OneToOneQueuePolicy(),3000,1));
             servers.get(i).setInitOcio(0.0);
         }
         for (int i = cantMedios+cantLivianos+1; i < cantPesados+cantMedios+cantLivianos+1; i++) {
-            queues.add(new CustomQueue(i));
+            List<Queue> queues = new ArrayList<>();
+            queues.add(new CustomQueue(0));
             servers.add(new Airstrip(i,queues,new OneToOneQueuePolicy(),5000,2));
             servers.get(i).setInitOcio(0.0);
         }

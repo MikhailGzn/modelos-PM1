@@ -66,6 +66,7 @@ public class Arrival extends Event {
         reloj = reloj%1440; //modulo 24hs=1440min, asi vemos que hora es. 
         Entity entity = null;
         if (this.getEntity() instanceof AircraftType){
+            report.contEntityXServer(server.getId());//Cuenta Entidad X Server
             entity = new AircraftType(this.getEntity().getId()+1,((AircraftType)this.getEntity()).getType(), null);
             if ((reloj<600 && reloj>420) || (reloj>1140 && reloj<1320)){  //Las horas pico pasadas a minutos           
                 if(this.getBehavior() instanceof ArrivalBehaviorLiviano){
@@ -96,7 +97,6 @@ public class Arrival extends Event {
         Event e1 = new Arrival(this.getClock() + nextTime1, entity, this.getBehavior(), this.endOfServiceBehavior, this.durabilidadBehavior,this.policy);
         fel.insert(e1);
         report.contEntity();//Cuenta Entidad
-        report.contEntityXServer(server.getId());//Cuenta Entidad X Server
         if(this.getEntity() instanceof AircraftType){
             report.contEntityXtype(((AircraftType)this.getEntity()).getType());//Cuenta Entidad X Tipo no cuenta 
         }
