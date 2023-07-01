@@ -17,11 +17,16 @@ public class MaintenanceBehavior implements Behavior{
     @Override
     public double nextTime() {
         double sum = 0.0;
-        for(int i = 0; i < N; i++){
-            sum += this.randomizer.nextRandom();
+        double auxiliar =-1d;
+        while (auxiliar < 0 ){ //No tiene sentido si da negativo, es poco probable pero consideramos el caso
+            sum=0.0;
+            for(int i = 0; i < N; i++){
+                sum += this.randomizer.nextRandom();
+            }
+            auxiliar = ((sum-N*(0.5))/(Math.sqrt(N/12.0)));
+            auxiliar = auxiliar*sigma+mu;
         }
-        double auxiliar = ((sum-N*(0.5))/(Math.sqrt(N/12.0)));
-        return auxiliar*sigma+mu;
+        return auxiliar;
         
     }    
 }

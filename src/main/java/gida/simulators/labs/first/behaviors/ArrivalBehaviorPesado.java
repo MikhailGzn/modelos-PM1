@@ -16,11 +16,17 @@ public class ArrivalBehaviorPesado extends ArrivalBehavior{
     }
     @Override
     public double nextTime() {
-        double sum = 0;
-        for(int i = 0; i < N; i++){
-            sum += super.getRandomizer().nextRandom();
+        double sum = 0.0;
+        double auxiliar =-1d;
+        while (auxiliar < 0 ){ //No tiene sentido si da negativo, es poco probable pero consideramos el caso
+            sum=0.0;
+            for(int i = 0; i < N; i++){
+                sum += super.getRandomizer().nextRandom();
+            }
+            auxiliar = ((sum-N*(0.5))/(Math.sqrt(N/12.0)));
+            auxiliar = auxiliar*sigma+mu;
         }
-        return ((sum-N*(0.5)*sigma)/(Math.sqrt(12.0*N)))+mu;
+        return auxiliar;
     }    
 
 }

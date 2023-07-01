@@ -18,7 +18,7 @@ public class ShortherQueueServerSelectionPolicy implements ServerSelectionPolicy
                 serversByType.add(server);
             }
         }
-        if(serversByType.size() == 1){ // Caso todos estan en mantenimiento
+        if(serversByType.size() == 0){ // Caso todos estan en mantenimiento
             return servers.get(0); 
         }
         Server serverMin = serversByType.get(0);        

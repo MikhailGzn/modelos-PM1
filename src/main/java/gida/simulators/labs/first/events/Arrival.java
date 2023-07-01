@@ -39,6 +39,7 @@ public class Arrival extends Event {
             if(this.getEntity() instanceof Maintenance){ //Si se planifica un mantenimiento se setea el modo de mantenimiento
                 server.setMaintMode(true);
                 report.contCantMaintenance();
+                System.out.println("Mantenimiento en server "+server.getId());
             }
             if(server.isBusy()){
                 // ADD TO QUEUE
@@ -60,9 +61,8 @@ public class Arrival extends Event {
                 }
             }
         }
-        //TIME OF SERVICE AND PLANIFICATION OF NEXT ENDOFSERVICE                
-        double nextTime1 = this.getBehavior().nextTime();
-        int reloj=(int)(this.getClock()+nextTime1);
+        //TIME OF SERVICE AND PLANIFICATION OF NEXT ENDOFSERVICE                        
+        int reloj=(int)(this.getClock());
         reloj = reloj%1440; //modulo 24hs=1440min, asi vemos que hora es. 
         Entity entity = null;
         if (this.getEntity() instanceof AircraftType){
@@ -94,6 +94,7 @@ public class Arrival extends Event {
         else{
             entity = new Maintenance(this.getEntity().getId()+1, null);
         }
+        double nextTime1 = this.getBehavior().nextTime();
         Event e1 = new Arrival(this.getClock() + nextTime1, entity, this.getBehavior(), this.endOfServiceBehavior, this.durabilidadBehavior,this.policy);
         fel.insert(e1);
         report.contEntity();//Cuenta Entidad

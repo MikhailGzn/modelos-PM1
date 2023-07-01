@@ -27,8 +27,8 @@ public class AirportSim extends Engine {
                 // Primer Aircraft Pesado
                 this.fel.insert(new Arrival(0, new AircraftType(1, 2,null), new ArrivalBehaviorPesado(randomizer,60,2), new EndOfServiceBehavior(randomizer), new DurabilidadBehaviorPesado(randomizer, 3, 6),policy));
                 // primer maintenance 
-                MaintenanceBehavior maintenanceBehavior = new MaintenanceBehavior(randomizer,18000
-                 , 1800); //5dias=18000min  0.5dias=1800min
+                MaintenanceBehavior maintenanceBehavior = new MaintenanceBehavior(randomizer,7200
+                 , 720); //5dias=18000min  0.5dias=1800min
                 //Para no arrancar haciendo el maintenance, lo inserto en la fel con el tiempo del nextTime.
                 this.fel.insert(new Arrival(maintenanceBehavior.nextTime(), new Maintenance(1, null), maintenanceBehavior, new EndOfMaintenanceBehavior(randomizer), new DurabilidadBehaviorLiviano(randomizer, -1, -1),new MaintenancePolicy()));
                 this.servers = servers;

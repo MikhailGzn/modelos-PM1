@@ -26,7 +26,7 @@ public class EndOfService extends Event {
         if(changeDurabilidad<0){ //Por como construimos el DurabilidadBehavior, en airportSim, si es mantenimiento retorna negativo
             server.setMaintMode(false);
             server.alterDurabilidad(server.getDurabilidad()*0.15);    //Y si no tiene mas durabilidad?
-            System.out.println("Mantenimiento en server: "+server.getId()+" Durabilidad: "+server.getDurabilidad());
+            System.out.println("Fin Mantenimiento en server: "+server.getId()+" Durabilidad: "+server.getDurabilidad()+this.getClock());
         }
         else{
             server.alterDurabilidad(-changeDurabilidad);
